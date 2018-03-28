@@ -1,5 +1,5 @@
 @extends ('layouts.dashboard')
-@section('page_heading',' Add Category')
+@section('page_heading',' Edit Category')
 
 @section('section')
 <div class="col-sm-12">
@@ -17,7 +17,7 @@
         <p class="alert-danger">{{$errors->first('description')}}</p>
     </div>
     <div class="form-group">
-       {!! Form::label('parent_id','Enter Category parent_id')!!}
+       {!! Form::label('parent_id','Select Parent Category')!!}
        {!! Form::select('parent_id',$categories,$record->parent_id,['id'=>'parent_id','class'=>'form-control'])!!}
         <p class="alert-danger">{{$errors->first('parent_id')}}</p>
     </div>

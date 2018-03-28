@@ -1,25 +1,30 @@
 @extends ('layouts.dashboard')
-@section('page_heading',' Add Category')
+@section('page_heading',' Add User')
 
 @section('section')
 <div class="col-sm-12">
 <div class="row">
     <div class="col-lg-6">
-{!! Form::open(['url'=>url('categories'),'method'=>'POST'])!!}
+{!! Form::open(['url'=>url('users'),'method'=>'POST','onsubmit'=>'return validate()'])!!}
     <div class="form-group">
-       {!! Form::label('title','Enter Category Title')!!}
-       {!! Form::text('title',null,['id'=>'title','class'=>'form-control'])!!}
-        <p class="alert-danger">{{$errors->first('title')}}</p>
+       {!! Form::label('name','Enter User Name')!!}
+       {!! Form::text('name',null,['id'=>'name','class'=>'form-control'])!!}
+        <p class="alert-danger">{{$errors->first('name')}}</p>
     </div>
     <div class="form-group">
-        {!! Form::label('description','Enter Category Description')!!}
-       {!! Form::textarea('description',null,['id'=>'description','class'=>'form-control','rows'=>5,'cols'=>30])!!}
-        <p class="alert-danger">{{$errors->first('description')}}</p>
+        {!! Form::label('email','Enter User Email')!!}
+       {!! Form::text('email',null,['id'=>'email','class'=>'form-control'])!!}
+        <p class="alert-danger">{{$errors->first('email')}}</p>
     </div>
     <div class="form-group">
-       {!! Form::label('parent_id','Enter Category parent_id')!!}
-       {!! Form::select('parent_id',$categories,null,['id'=>'parent_id','class'=>'form-control'])!!}
-        <p class="alert-danger">{{$errors->first('parent_id')}}</p>
+       {!! Form::label('password','Enter Password')!!}
+       {!! Form::password('password',null,['id'=>'password','class'=>'form-control'])!!}
+        <p class="alert-danger">{{$errors->first('password')}}</p>
+    </div>
+    <div class="form-group">
+       {!! Form::label('re-pass',' Re-Enter Password')!!}
+       {!! Form::password('re-pass',null,['id'=>'re-pass','class'=>'form-control'])!!}
+        <p class="alert-danger">{{$errors->first('re-pass')}}</p>
     </div>
    
     
@@ -33,7 +38,25 @@
 </div>
 <script>
 function redirectBack(){
-    window.location = "{{url('categories')}}";
+    window.location = "{{url('users')}}";
+}
+
+function validate(){
+  var result =true;
+  $('input').each(function(){
+    if(!$(this).val()){
+      $(this).closest('p').html('This field cannot be kept blank');
+      result =false;
+    }
+  });
+  if(result){
+    if($('#password').val()!= $('#re-pass').val()){
+      $('#re-pass').closest('p').html('Password do not match');
+      result =false;
+    }
+  }
+
+  return result;
 }
 </script>
 @stop

@@ -26,4 +26,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getListing($filter=[]){
+        return $this->paginate(config('globals.PAGINATION_LIMIT'));
+    }
 }

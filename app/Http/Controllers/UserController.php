@@ -40,9 +40,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(userRequest $request)
+    public function store(UserRequest $request)
     {
         $data= $request->except('_token');
+        $data['password'] = bcrypt($data['password']);
         $result = $this->user->create($data);
         if($result){
             return redirect('users');
@@ -83,7 +84,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(userRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $data= $request->except(['_token','_method']);
         $result = $this->user->find($id)->update($data);
@@ -102,10 +103,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
+        $result='';
          $message = 'Error Ocured';
-         
-        $result = $this->user->find($id)->delete();
+         if(\Auth::getUser()->id != $id){
+            $result = $this->user->find($id)->delete();
+         }
+        
         if($result){
             return redirect('users')->with('message','User Deleted Successfully')->with('class','success');
         }else{

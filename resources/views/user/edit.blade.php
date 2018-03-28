@@ -1,30 +1,24 @@
 @extends ('layouts.dashboard')
-@section('page_heading',' Add Category')
+@section('page_heading',' Edit User')
 
 @section('section')
 <div class="col-sm-12">
 <div class="row">
     <div class="col-lg-6">
-{!! Form::open(['route'=>['categories.update',$record->id],'method'=>'PUT'])!!}
+{!! Form::open(['route'=>['users.update',$record->id],'method'=>'PUT','onsubmit'=>'return validate()'])!!}
     <div class="form-group">
-       {!! Form::label('title','Enter Category Title')!!}
-       {!! Form::text('title',$record->title,['id'=>'title','class'=>'form-control'])!!}
-        <p class="alert-danger">{{$errors->first('title')}}</p>
+       {!! Form::label('name','Enter User Name')!!}
+       {!! Form::text('name',$record->name,['id'=>'name','class'=>'form-control'])!!}
+        <p class="alert-danger">{{$errors->first('name')}}</p>
     </div>
     <div class="form-group">
-        {!! Form::label('description','Enter Category Description')!!}
-       {!! Form::textarea('description',$record->description,['id'=>'description','class'=>'form-control','rows'=>5,'cols'=>30])!!}
-        <p class="alert-danger">{{$errors->first('description')}}</p>
-    </div>
-    <div class="form-group">
-       {!! Form::label('parent_id','Enter Category parent_id')!!}
-       {!! Form::select('parent_id',$categories,$record->parent_id,['id'=>'parent_id','class'=>'form-control'])!!}
-        <p class="alert-danger">{{$errors->first('parent_id')}}</p>
+        {!! Form::label('email','Enter User Email')!!}
+       {!! Form::text('email',$record->email,['id'=>'email','class'=>'form-control'])!!}
+        <p class="alert-danger">{{$errors->first('email')}}</p>
     </div>
    
     
-   
-    {!! Form::submit('Update',['class'=>'btn btn-primary'])!!}
+    {!! Form::submit('Submit',['class'=>'btn btn-primary'])!!}
     {!! Form::button('Cancel',['class'=>'btn btn-default','onClick'=>'redirectBack()'])!!}
    
 {!! Form::close()!!}
@@ -33,7 +27,19 @@
 </div>
 <script>
 function redirectBack(){
-    window.location = "{{url('categories')}}";
+    window.location = "{{url('users')}}";
+}
+
+function validate(){
+  var result =true;
+  $('input').each(function(){
+    if(!$(this).val()){
+      $(this).closest('p').html('This field cannot be kept blank');
+      result =false;
+    }
+  });
+
+  return result;
 }
 </script>
 @stop

@@ -17,7 +17,7 @@
         <p class="alert-danger">{{$errors->first('description')}}</p>
     </div>
     <div class="form-group">
-       {!! Form::label('parent_id','Enter Category parent_id')!!}
+       {!! Form::label('parent_id','Select Parent Category')!!}
        {!! Form::select('parent_id',$categories,null,['id'=>'parent_id','class'=>'form-control'])!!}
         <p class="alert-danger">{{$errors->first('parent_id')}}</p>
     </div>
