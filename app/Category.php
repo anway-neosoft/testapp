@@ -31,4 +31,21 @@ class Category extends Model
 
    		return $q->pluck('title','id')->toArray();
    	}
+
+   	public function saveRecord($data,$id=''){
+   		$user = \Auth::getUser()->id;
+   		$record = '';
+   		if($id){
+   			$record = $this->find($id);
+   		}
+   		if($record){
+   			$data['updated_by'] = $user;
+   			$result = $record->update($data);
+   		}else{
+   			$data['created_by'] = $user;
+   			$data['updated_by'] = $user;
+   			$result = $this->create($data);
+   		}
+   		return $result;
+   	}
 }

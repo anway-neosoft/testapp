@@ -44,11 +44,8 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data= $request->except('_token');
-        $user = \Auth::getUser()->id;
-        $data['created_by'] = $user;
-        $data['updated_by'] = $user;
 
-        $result = $this->category->create($data);
+        $result = $this->category->saveRecord($data);
         if($result){
             return redirect('categories');
         }else{
@@ -92,10 +89,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         $data= $request->except(['_token','_method']);
-        $user = \Auth::getUser()->id;
-        $data['updated_by'] = $user;
-
-        $result = $this->category->find($id)->update($data);
+        $result = $this->category->saveRecord($data,$id);
         if($result){
             return redirect('categories');
         }else{
